@@ -4,7 +4,7 @@ resource "aws_lb" "main" {
   load_balancer_type         = "application"
   security_groups            = ["${var.alb_sg_id}"]
   subnets                    = [aws_subnet.public_1a.id, aws_subnet.public_1c.id]
-  enable_deletion_protection = true
+  enable_deletion_protection = false
  
   tags = {
     Env = "pre"
