@@ -60,3 +60,9 @@ resource "aws_route_table_association" "public_1c" {
 output "vpc_id" {
   value       = aws_vpc.main.id
 }
+output "subned_public_1a_id" {
+  value       = aws_subnet.public_1a.id
+}
+output "subned_public_1c_id" {
+  value       = aws_subnet.public_1c.id
+}

@@ -22,23 +22,23 @@ resource "aws_ecs_task_definition" "main" {
     family = "${var.env}-task-definition"
     requires_compatibilities = ["FARGATE"]
 
-  cpu    = "256"
-  memory = "512"
+    cpu    = "256"
+    memory = "512"
 
-  network_mode = "awsvpc"
+    network_mode = "awsvpc"
 
-  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
+    execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
 
-  container_definitions = jsonencode([{
-        "name": "apache-hello-world",
-        "image": "${var.apache_container_image_uri}",
-        "portMappings": [
-            {
-                "containerPort": 80,
-                "hostPort": 80
-            }
-        ]
-    }])
+    container_definitions = jsonencode([{
+            "name": "apache-hello-world",
+            "image": "${var.apache_container_image_uri}",
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80
+                }
+            ]
+        }])
 }
 
 resource "aws_ecs_cluster" "main" {
@@ -54,12 +54,12 @@ resource "aws_ecs_service" "main" {
 
   launch_type = "FARGATE"
 
-  desired_count = "1"
+  desired_count = "2"
 
   task_definition = aws_ecs_task_definition.main.arn
 
   network_configuration {
-    subnets         = [aws_subnet.public_1a.id, aws_subnet.public_1c.id]
+    subnets         = [var.subned_public_1a_id, var.subned_public_1c_id]
     security_groups = ["${var.ecs_sg_id}"]
   }
 

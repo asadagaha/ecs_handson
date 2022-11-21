@@ -3,11 +3,11 @@ resource "aws_lb" "main" {
   internal                   = false
   load_balancer_type         = "application"
   security_groups            = ["${var.alb_sg_id}"]
-  subnets                    = [aws_subnet.public_1a.id, aws_subnet.public_1c.id]
+  subnets                    = [var.subned_public_1a_id, var.subned_public_1c_id]
   enable_deletion_protection = false
  
   tags = {
-    Env = "pre"
+    Env = "${var.env}-alb"
   }
 }
 resource "aws_lb_listener" "main" {
@@ -45,7 +45,7 @@ resource "aws_lb_listener_rule" "main" {
 resource "aws_lb_target_group" "main" {
   name = "${var.env}-alb-tg"
 
-  vpc_id = aws_vpc.main.id
+  vpc_id = var.vpc_id
 
   port        = 80
   protocol    = "HTTP"
