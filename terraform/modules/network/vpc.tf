@@ -8,22 +8,16 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "public_1a" {
   vpc_id = aws_vpc.main.id
-
   availability_zone = "ap-northeast-1a"
-
   cidr_block        = "10.0.1.0/24"
-
   tags = {
     Name = "${var.env}-public-1a"
   }
 }
 resource "aws_subnet" "public_1c" {
   vpc_id = aws_vpc.main.id
-
   availability_zone = "ap-northeast-1c"
-
   cidr_block        = "10.0.3.0/24"
-
   tags = {
     Name = "${var.env}-public-1c"
   }
@@ -33,7 +27,6 @@ resource "aws_subnet" "public_1c" {
 
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
-
   tags = {
     Name = "${var.env}-igw"
   }
@@ -42,10 +35,19 @@ resource "aws_internet_gateway" "main" {
 
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
-
   tags = {
     Name = "${var.env}-public"
   }
+}
+resource "aws_route" "public" {
+  route_table_id            = aws_route_table.public.id
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.main.id
+}
+
+resource "aws_main_route_table_association" "vpc" {
+  vpc_id = aws_vpc.main.id
+  route_table_id = aws_route_table.public.id
 }
 resource "aws_route_table_association" "public_1a" {
   subnet_id      = aws_subnet.public_1a.id
@@ -57,12 +59,20 @@ resource "aws_route_table_association" "public_1c" {
 }
 
 
+
 output "vpc_id" {
   value       = aws_vpc.main.id
 }
+output "vpc_cidr" {
+  value       = aws_vpc.main.cidr_block
+}
+
 output "subned_public_1a_id" {
   value       = aws_subnet.public_1a.id
 }
 output "subned_public_1c_id" {
   value       = aws_subnet.public_1c.id
+}
+output "route_table_id" {
+  value       = aws_route_table.public.id
 }

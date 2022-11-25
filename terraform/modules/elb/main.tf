@@ -40,20 +40,19 @@ resource "aws_lb_listener_rule" "main" {
   }
 }
 
- 
-
 resource "aws_lb_target_group" "main" {
   name = "${var.env}-alb-tg"
-
   vpc_id = var.vpc_id
-
-  port        = 80
-  protocol    = "HTTP"
   target_type = "ip"
-
+  protocol    = "HTTP"
+  port        = 80
   health_check {
     port = 80
     path = "/"
   }
+  depends_on = [aws_lb.main]
 }
 
+output "target_group_arn" {
+  value       = aws_lb_target_group.main.arn
+}
