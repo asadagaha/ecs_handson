@@ -1,9 +1,9 @@
 resource "aws_security_group" "alb" {
-  name        = "${var.env}-alb"
-  description = "${var.env} alb"
+  name        = "${var.project}-alb-${var.env}"
+  description = "${var.project} alb"
   vpc_id      = var.vpc_id
   tags = {
-    Name = "${var.env}-alb-sg"
+    Name = "${var.project}-alb-sg"
   }
 }
 resource "aws_security_group_rule" "alb_inbound_http" {
@@ -24,11 +24,11 @@ resource "aws_security_group_rule" "alb_outbound_all_allow" {
 }
 
 resource "aws_security_group" "ecs" {
-  name        = "${var.env}-ecs-sg"
-  description = "${var.env}-ecs-sg"
+  name        = "${var.project}-ecs-sg-${var.env}"
+  description = "${var.project}-ecs-sg-${var.env}"
   vpc_id      = var.vpc_id
   tags = {
-    Name = "${var.env}-ecs-sg"
+    Name = "${var.project}-ecs-sg"
   }
 }
 resource "aws_security_group_rule" "ecs_inbound_http" {
@@ -50,11 +50,11 @@ resource "aws_security_group_rule" "ecs_outbound_all_allow" {
 
 
 resource "aws_security_group" "vpc_endpoint" {
-  name        = "${var.env}-vpc-endpoint-sg"
-  description = "${var.env}-vpc-endpoint-sg"
+  name        = "${var.project}-vpc-endpoint-sg-${var.env}"
+  description = "${var.project}-vpc-endpoint-sg-${var.env}"
   vpc_id      = var.vpc_id
   tags = {
-    Name = "${var.env}-vpc-endpoint-sg"
+    Name = "${var.project}-vpc-endpoint-sg"
   }
 }
 resource "aws_security_group_rule" "vpc_endpoint_inbound_http" {
@@ -73,16 +73,4 @@ resource "aws_security_group_rule" "vpc_endpoint_outbound_all_allow" {
   to_port           = 0
   protocol          = "-1"
   cidr_blocks      = ["0.0.0.0/0"]
-}
-
-
-
-output "ecs_sg_id" {
-  value       = aws_security_group.ecs.id
-}
-output "alb_sg_id" {
-  value       = aws_security_group.alb.id
-}
-output "vpc_endpoint_sg_id" {
-  value       = aws_security_group.vpc_endpoint.id
 }

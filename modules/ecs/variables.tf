@@ -1,3 +1,4 @@
+variable "project" {}
 variable "env" {}
 variable "vpc_id" {}
 variable "subned_public_1a_id" {}

@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "main" {
-  name = "${var.env}-cluster"
+  name = "${var.project}-cluster-${var.env}"
   setting {
     name  = "containerInsights"
     value = "enabled"
@@ -17,7 +17,7 @@ resource "aws_ecs_cluster_capacity_providers" "main" {
 }
 
 resource "aws_ecs_task_definition" "main" {
-  family = "${var.env}-task-definition"
+  family = "${var.project}-task-definition-${var.env}"
   requires_compatibilities = ["FARGATE"]
   cpu    = "256"
   memory = "512"
@@ -56,7 +56,7 @@ resource "aws_ecs_task_definition" "main" {
 }
 
 resource "aws_ecs_service" "main" {
-  name = "${var.env}-service"
+  name = "${var.project}-service-${var.env}"
   cluster = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.main.arn
   launch_type = "FARGATE"
