@@ -26,10 +26,8 @@ resource "aws_ecs_task_definition" "main" {
   task_role_arn            = var.ecs_task_execution_role_arn
   container_definitions = jsonencode([
     {
-      "name": "apache-hello-world",
-      "image": "${var.apache_container_image_uri}",
-      #"name": "nginx",
-      #"image": "nginx",
+      "name": var.web_container_name
+      "image": "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.web_container_name}"
       "cpu"       : 10
       "memory"    : 512
       "essential" : true      
@@ -72,7 +70,7 @@ resource "aws_ecs_service" "main" {
 
   load_balancer {
       target_group_arn = var.target_group_arn
-      container_name   = var.apache_container_name
+      container_name   = var.web_container_name
       #container_name   = "nginx"
       container_port   = "80"
     }

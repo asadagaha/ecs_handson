@@ -17,7 +17,7 @@ resource "aws_lb_listener" "main" {
   port              = "80"
   protocol          = "HTTP"
   #ssl_policy        = "ELBSecurityPolicy-2016-08"
-  #certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+  #certificate_arn   = local.arm_arn
 
   default_action {
     type             = "forward"
