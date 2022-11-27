@@ -41,11 +41,7 @@ resource "aws_lb_listener_rule" "main" {
 }
 
 resource "aws_lb_target_group" "main" {
-<<<<<<<< HEAD:terraform/modules/elb/main.tf
-  name = "${var.env}-alb-tg"
-========
   name = "${var.project}-alb-tg-${var.env}"
->>>>>>>> bb9156d (modify):modules/elb/main.tf
   vpc_id = var.vpc_id
   target_type = "ip"
   protocol    = "HTTP"
@@ -55,8 +51,4 @@ resource "aws_lb_target_group" "main" {
     path = "/"
   }
   depends_on = [aws_lb.main]
-}
-
-output "target_group_arn" {
-  value       = aws_lb_target_group.main.arn
 }
