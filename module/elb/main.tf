@@ -52,4 +52,3 @@ resource "aws_lb_target_group" "main" {
   }
   depends_on = [aws_lb.main]
 }
-

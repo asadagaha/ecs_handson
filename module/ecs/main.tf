@@ -26,10 +26,17 @@ resource "aws_ecs_task_definition" "main" {
   task_role_arn            = var.ecs_task_execution_role_arn
   container_definitions = jsonencode([
     {
+<<<<<<< HEAD
       "name": var.web_container_name
       "image": "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.web_container_name}"
       "cpu"       : 10
       "memory"    : 512
+=======
+      "name": "${var.project}-${var.web_container_name}",
+      "image": "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.project}-${var.web_container_name}",
+      #"name": "nginx",
+      #"image": "nginx",
+>>>>>>> refs/remotes/origin/main
       "essential" : true      
       "portMappings": [
         {
@@ -47,10 +54,13 @@ resource "aws_ecs_task_definition" "main" {
       }
     }
   ])
+<<<<<<< HEAD
   runtime_platform {
     operating_system_family = "LINUX"
     cpu_architecture =         "X86_64"
   }  
+=======
+>>>>>>> refs/remotes/origin/main
 }
 
 resource "aws_ecs_service" "main" {
@@ -70,8 +80,12 @@ resource "aws_ecs_service" "main" {
 
   load_balancer {
       target_group_arn = var.target_group_arn
+<<<<<<< HEAD
       container_name   = var.web_container_name
       #container_name   = "nginx"
+=======
+      container_name   = "${var.project}-${var.web_container_name}"
+>>>>>>> refs/remotes/origin/main
       container_port   = "80"
     }
 }
