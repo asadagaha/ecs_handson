@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 variable "project" {}
 variable "env" {}
 variable "account_id" {}
 variable "region" {}
-=======
-variable "account_id" {}
-variable "region" {}
-variable "project" {}
-variable "env" {}
->>>>>>> refs/remotes/origin/main
 variable "vpc_id" {}
 variable "subned_public_1a_id" {}
 variable "subned_public_1c_id" {}

@@ -34,6 +34,7 @@ module "elb" {
   subned_public_1a_id = module.network.subned_public_1a_id
   subned_public_1c_id = module.network.subned_public_1c_id
   alb_sg_id           = module.security_group.alb_sg_id
+  acm_arn = var.acm_arn
 }
 module "ecr" {
   source             = "../module/ecr"
