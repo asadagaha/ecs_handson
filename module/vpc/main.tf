@@ -8,7 +8,7 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "public_1a" {
   vpc_id = aws_vpc.main.id
-  availability_zone = "ap-northeast-1a"
+  availability_zone = "${var.region}a"
   cidr_block        = "10.0.1.0/24"
   tags = {
     Name = "${var.project}-public-1a-${var.env}"
@@ -16,7 +16,7 @@ resource "aws_subnet" "public_1a" {
 }
 resource "aws_subnet" "public_1c" {
   vpc_id = aws_vpc.main.id
-  availability_zone = "ap-northeast-1c"
+  availability_zone = "${var.region}c"
   cidr_block        = "10.0.3.0/24"
   tags = {
     Name = "${var.project}-public-1c-${var.env}"

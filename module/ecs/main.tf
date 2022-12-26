@@ -7,7 +7,7 @@ resource "aws_ecs_cluster" "main" {
 }
 resource "aws_ecs_cluster_capacity_providers" "main" {
   cluster_name = aws_ecs_cluster.main.name
-  capacity_providers = ["FARGATE"]
+  capacity_providers = ["FARGATE_SPOT"]
 
   default_capacity_provider_strategy {
     base              = 1
@@ -40,7 +40,7 @@ resource "aws_ecs_task_definition" "main" {
       "logConfiguration": {
         "logDriver": "awslogs"
         "options": {
-          "awslogs-region": "ap-northeast-1"
+          "awslogs-region": var.region
           "awslogs-stream-prefix": "ecs"
           "awslogs-group": var.cloudwatch_log_group_for_ecs
         }
@@ -60,7 +60,7 @@ resource "aws_ecs_service" "main" {
 
   network_configuration {
     assign_public_ip = true
-    subnets         = [var.subned_public_1a_id, var.subned_public_1c_id]
+    subnets         = var.subnet_ids
     security_groups = ["${var.ecs_sg_id}"]
   }
 
