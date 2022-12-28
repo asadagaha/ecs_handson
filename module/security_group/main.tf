@@ -1,9 +1,9 @@
 resource "aws_security_group" "alb" {
-  name        = "${var.project}-alb-${var.env}"
-  description = "${var.project} alb"
+  name        = "${var.app}-alb-${var.env}"
+  description = "${var.app} alb"
   vpc_id      = var.vpc_id
   tags = {
-    Name = "${var.project}-alb-sg"
+    Name = "${var.app}-alb-sg"
   }
 }
 resource "aws_security_group_rule" "alb_inbound_http" {
@@ -24,11 +24,11 @@ resource "aws_security_group_rule" "alb_outbound_all_allow" {
 }
 
 resource "aws_security_group" "ecs" {
-  name        = "${var.project}-ecs-sg-${var.env}"
-  description = "${var.project}-ecs-sg-${var.env}"
+  name        = "${var.app}-ecs-sg-${var.env}"
+  description = "${var.app}-ecs-sg-${var.env}"
   vpc_id      = var.vpc_id
   tags = {
-    Name = "${var.project}-ecs-sg"
+    Name = "${var.app}-ecs-sg"
   }
 }
 resource "aws_security_group_rule" "ecs_inbound_http" {
@@ -50,11 +50,11 @@ resource "aws_security_group_rule" "ecs_outbound_all_allow" {
 
 
 resource "aws_security_group" "vpc_endpoint" {
-  name        = "${var.project}-vpc-endpoint-sg-${var.env}"
-  description = "${var.project}-vpc-endpoint-sg-${var.env}"
+  name        = "${var.app}-vpc-endpoint-sg-${var.env}"
+  description = "${var.app}-vpc-endpoint-sg-${var.env}"
   vpc_id      = var.vpc_id
   tags = {
-    Name = "${var.project}-vpc-endpoint-sg"
+    Name = "${var.app}-vpc-endpoint-sg"
   }
 }
 resource "aws_security_group_rule" "vpc_endpoint_inbound_http" {

@@ -1,4 +1,4 @@
-variable "project" {}
+variable "app" {}
 variable "env" {}
 variable "region" {}
 variable "web_container_name" {}

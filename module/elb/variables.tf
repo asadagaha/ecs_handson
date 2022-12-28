@@ -1,4 +1,4 @@
-variable "project" {}
+variable "app" {}
 variable "env" {}
 variable "vpc_id" {}
 variable "subnet_ids" {}

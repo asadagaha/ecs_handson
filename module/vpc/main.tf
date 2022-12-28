@@ -2,7 +2,7 @@ resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name = "${var.project}-vpc-${var.env}"
+    Name = "${var.app}-vpc-${var.env}"
   }
 }
 
@@ -11,7 +11,7 @@ resource "aws_subnet" "public_1a" {
   availability_zone = "${var.region}a"
   cidr_block        = "10.0.1.0/24"
   tags = {
-    Name = "${var.project}-public-1a-${var.env}"
+    Name = "${var.app}-public-1a-${var.env}"
   }
 }
 resource "aws_subnet" "public_1c" {
@@ -19,7 +19,7 @@ resource "aws_subnet" "public_1c" {
   availability_zone = "${var.region}c"
   cidr_block        = "10.0.3.0/24"
   tags = {
-    Name = "${var.project}-public-1c-${var.env}"
+    Name = "${var.app}-public-1c-${var.env}"
   }
 }
 
@@ -27,7 +27,7 @@ resource "aws_subnet" "public_1c" {
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
   tags = {
-    Name = "${var.project}-igw-${var.env}"
+    Name = "${var.app}-igw-${var.env}"
   }
 }
 
@@ -56,7 +56,7 @@ resource "aws_internet_gateway" "main" {
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
   tags = {
-    Name = "${var.project}-public-${var.env}"
+    Name = "${var.app}-public-${var.env}"
   }
 }
 resource "aws_route" "public" {

@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "main" {
-  name = "${var.project}-cluster-${var.env}"
+  name = "${var.app}-cluster-${var.env}"
   setting {
     name  = "containerInsights"
     value = "enabled"
@@ -17,7 +17,7 @@ resource "aws_ecs_cluster_capacity_providers" "main" {
 }
 
 resource "aws_ecs_task_definition" "main" {
-  family = "${var.project}-task-definition-${var.env}"
+  family = "${var.app}-task-definition-${var.env}"
   requires_compatibilities = ["FARGATE"]
   cpu    = "256"
   memory = "512"
@@ -28,8 +28,8 @@ resource "aws_ecs_task_definition" "main" {
     {
       "name": var.web_container_name
       "image": "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.web_container_name}"
-      "name": "${var.project}-${var.web_container_name}",
-      "image": "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.project}-${var.web_container_name}",
+      "name": "${var.app}-${var.web_container_name}",
+      "image": "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.app}-${var.web_container_name}",
       "essential" : true      
       "portMappings": [
         {
@@ -50,7 +50,7 @@ resource "aws_ecs_task_definition" "main" {
 }
 
 resource "aws_ecs_service" "main" {
-  name = "${var.project}-service-${var.env}"
+  name = "${var.app}-service-${var.env}"
   cluster = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.main.arn
   launch_type = "FARGATE"
@@ -66,7 +66,7 @@ resource "aws_ecs_service" "main" {
 
   load_balancer {
       target_group_arn = var.target_group_arn
-      container_name   = "${var.project}-${var.web_container_name}"
+      container_name   = "${var.app}-${var.web_container_name}"
       container_port   = "80"
     }
 }

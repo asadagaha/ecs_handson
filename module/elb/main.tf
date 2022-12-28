@@ -1,5 +1,5 @@
 resource "aws_lb" "main" {
-  name                       = "${var.project}-alb-${var.env}"
+  name                       = "${var.app}-alb-${var.env}"
   internal                   = false
   load_balancer_type         = "application"
   security_groups            = ["${var.alb_sg_id}"]
@@ -7,7 +7,7 @@ resource "aws_lb" "main" {
   enable_deletion_protection = false
  
   tags = {
-    Env = "${var.project}-alb"
+    Env = "${var.app}-alb"
   }
 }
 resource "aws_lb_listener" "main" {
@@ -39,7 +39,7 @@ resource "aws_lb_listener_rule" "main" {
 }
 
 resource "aws_lb_target_group" "main" {
-  name = "${var.project}-alb-tg-${var.env}"
+  name = "${var.app}-alb-tg-${var.env}"
   vpc_id = var.vpc_id
   target_type = "ip"
   protocol    = "HTTP"

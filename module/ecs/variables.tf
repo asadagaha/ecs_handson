@@ -1,4 +1,4 @@
-variable "project" {}
+variable "app" {}
 variable "env" {}
 variable "account_id" {}
 variable "region" {}
