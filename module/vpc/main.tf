@@ -7,7 +7,7 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "public_1a" {
-  vpc_id = aws_vpc.main.id
+  vpc_id            = aws_vpc.main.id
   availability_zone = "${var.region}a"
   cidr_block        = "10.0.1.0/24"
   tags = {
@@ -15,7 +15,7 @@ resource "aws_subnet" "public_1a" {
   }
 }
 resource "aws_subnet" "public_1c" {
-  vpc_id = aws_vpc.main.id
+  vpc_id            = aws_vpc.main.id
   availability_zone = "${var.region}c"
   cidr_block        = "10.0.3.0/24"
   tags = {
@@ -60,13 +60,13 @@ resource "aws_route_table" "public" {
   }
 }
 resource "aws_route" "public" {
-  route_table_id            = aws_route_table.public.id
-  destination_cidr_block    = "0.0.0.0/0"
-  gateway_id = aws_internet_gateway.main.id
+  route_table_id         = aws_route_table.public.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.main.id
 }
 
 resource "aws_main_route_table_association" "vpc" {
-  vpc_id = aws_vpc.main.id
+  vpc_id         = aws_vpc.main.id
   route_table_id = aws_route_table.public.id
 }
 resource "aws_route_table_association" "public_1a" {

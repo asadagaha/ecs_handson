@@ -8,19 +8,19 @@ resource "aws_security_group" "alb" {
 }
 resource "aws_security_group_rule" "alb_inbound_http" {
   security_group_id = aws_security_group.alb.id
-  type = "ingress"
-  from_port = 80
-  to_port   = 80
-  protocol  = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 resource "aws_security_group_rule" "alb_outbound_all_allow" {
   security_group_id = aws_security_group.alb.id
   type              = "egress"
-  from_port        = 0
+  from_port         = 0
   to_port           = 0
   protocol          = "-1"
-  cidr_blocks      = ["0.0.0.0/0"]
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group" "ecs" {
@@ -32,20 +32,20 @@ resource "aws_security_group" "ecs" {
   }
 }
 resource "aws_security_group_rule" "ecs_inbound_http" {
-  security_group_id = aws_security_group.ecs.id
-  type        = "ingress"
-  from_port   = 80
-  to_port     = 80
-  protocol    = "tcp"
+  security_group_id        = aws_security_group.ecs.id
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
   source_security_group_id = aws_security_group.alb.id
 }
 resource "aws_security_group_rule" "ecs_outbound_all_allow" {
   security_group_id = aws_security_group.ecs.id
   type              = "egress"
-  from_port        = 0
+  from_port         = 0
   to_port           = 0
   protocol          = "-1"
-  cidr_blocks      = ["0.0.0.0/0"]
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 
@@ -69,8 +69,8 @@ resource "aws_security_group_rule" "vpc_endpoint_inbound_http" {
 resource "aws_security_group_rule" "vpc_endpoint_outbound_all_allow" {
   security_group_id = aws_security_group.vpc_endpoint.id
   type              = "egress"
-  from_port        = 0
+  from_port         = 0
   to_port           = 0
   protocol          = "-1"
-  cidr_blocks      = ["0.0.0.0/0"]
+  cidr_blocks       = ["0.0.0.0/0"]
 }
